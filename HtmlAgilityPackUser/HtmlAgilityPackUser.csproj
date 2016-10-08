@@ -38,6 +38,8 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="AnalyzeHtml.cs" />
+    <Compile Include="AnalyzedData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

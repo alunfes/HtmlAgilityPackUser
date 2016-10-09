@@ -40,6 +40,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AnalyzeHtml.cs" />
     <Compile Include="AnalyzedData.cs" />
+    <Compile Include="DownloadHtml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

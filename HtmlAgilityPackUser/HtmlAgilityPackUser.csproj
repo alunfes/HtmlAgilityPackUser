@@ -41,6 +41,7 @@
     <Compile Include="AnalyzeHtml.cs" />
     <Compile Include="AnalyzedData.cs" />
     <Compile Include="DownloadHtml.cs" />
+    <Compile Include="WriteData.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -6,20 +6,22 @@ namespace HtmlAgilityPackUser
 {
 	public class AnalyzedData
 	{
-		public AnalyzedData()
-		{
-			initialize();
-		}
-
-
 		private List<string> xpath;
 		private List<string> inner_text;
+		private string url;
 		private object lockobj = new object();
+
+		public AnalyzedData(string u)
+		{
+			initialize();
+			url = u;
+		}
 
 		public void initialize()
 		{
 			xpath = new List<string>();
 			inner_text = new List<string>();
+			url = string.Empty;
 		}
 
 		public void addXpath(string path)
@@ -48,6 +50,10 @@ namespace HtmlAgilityPackUser
 		{
 			lock(lockobj)
 				return xpath.Count;
+		}
+		public string getUrl()
+		{
+			return url;
 		}
 	}
 }

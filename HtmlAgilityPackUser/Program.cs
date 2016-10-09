@@ -7,6 +7,7 @@ using System.Xml;
 using HtmlAgilityPack;
 using System.Threading;
 using System.Diagnostics;
+using System.Collections.Generic;
 
 namespace HtmlAgilityPackUser
 {
@@ -34,9 +35,19 @@ namespace HtmlAgilityPackUser
 			sw.Start();
 			DownloadHtml dh = new DownloadHtml();
 			string html = dh.downloadHtml(url.ToString());
-			AnalyzedData ad = AnalyzeHtml.anlyzeHtml(html);
+			AnalyzedData ad = AnalyzeHtml.anlyzeHtml(html, url.ToString());
 			sw.Stop();
 			Console.WriteLine("Total Time:"+sw.Elapsed);
+
+			string selected;
+			do
+			{
+				Console.WriteLine("Please input number you want to download. i.e. 1;2;3;7");
+				selected = Console.ReadLine();
+			}while(selected.Contains(";")==false);
+			//strList.ConvertAll(x => int.Parse(x));
+			WriteData wd = new WriteData();
+			wd.writeAnalyzedHtmlSelectedData(ad, selected.Split(';').ToList().ConvertAll(x => int.Parse(x)));
 		}
 
 		private static bool checkUrl(string url)

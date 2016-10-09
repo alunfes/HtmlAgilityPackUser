@@ -6,7 +6,7 @@ namespace HtmlAgilityPackUser
 {
 	public class AnalyzedData
 	{
-		public AnalyzedData
+		public AnalyzedData()
 		{
 			initialize();
 		}
@@ -43,6 +43,11 @@ namespace HtmlAgilityPackUser
 		{
 			lock(lockobj)
 				return inner_text;
+		}
+		public int getNum()
+		{
+			lock(lockobj)
+				return xpath.Count;
 		}
 	}
 }

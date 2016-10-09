@@ -9,9 +9,9 @@ namespace HtmlAgilityPackUser
 {
 	public static class AnalyzeHtml
 	{
-		public AnalyzeHtml()
+		/*public AnalyzeHtml()
 		{
-		}
+		}*/
 
 		public static AnalyzedData anlyzeHtml(string html)
 		{
@@ -22,10 +22,12 @@ namespace HtmlAgilityPackUser
 				htmldoc.LoadHtml(html);
 
 				var selected = htmldoc.DocumentNode.SelectNodes("//*");
-				foreach (var a in selected.Distinct())
+				List<string> inner = new List<string>();
+				foreach (var a in selected)
 				{
-					if (a.OuterHtml.Contains("script") == false && a.InnerText.Length > 1)
+					if (a.OuterHtml.Contains("script") == false && a.InnerText.Length > 1 && inner.Contains(a.InnerText) == false)
 					{
+						inner.Add(a.InnerText);
 						Console.WriteLine(a.XPath.Count(c => c == '/') + " : " + a.InnerText);
 						ad.addInnerText(a.InnerText);
 						ad.addXpath(a.XPath);

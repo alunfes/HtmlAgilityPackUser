@@ -5,6 +5,8 @@ using System.Linq;
 using System.IO;
 using System.Xml;
 using HtmlAgilityPack;
+using System.Threading;
+using System.Diagnostics;
 
 namespace HtmlAgilityPackUser
 {
@@ -21,45 +23,20 @@ namespace HtmlAgilityPackUser
 				url = Console.ReadLine();
 			} while (checkUrl(url) == false);
 
-			//download html
-			string html = downloadHtml(url);
+			Thread th = new Thread(new ParameterizedThreadStart(mainThread));
+			th.Start(url);
+		}
 
-			//agilitypack
-			if (html.Substring(0, 5) != "error")
-			{
-				var htmldoc = new HtmlAgilityPack.HtmlDocument();
-				htmldoc.LoadHtml(html);
 
-				var selected = htmldoc.DocumentNode.SelectNodes("//*");
-
-				try
-				{
-					using (StreamWriter sw = new StreamWriter("data.txt", true, Encoding.Default))
-					{
-						int i = 0;
-						foreach (var a in selected)
-						{
-							if (a.OuterHtml.Contains("script") == false && a.InnerText.Length > 1)
-							{
-								Console.WriteLine(a.XPath.Count(c => c == '/') + " : " + a.InnerText);
-								sw.WriteLine(i.ToString() +"\t"+ a.XPath+"\t"+a.InnerText);
-								i++;
-							}
-						}
-					}
-				}
-				catch (Exception e)
-				{
-					Console.WriteLine("Finished with html download error!");
-					Console.WriteLine(e.ToString());
-				}
-			}
-			else
-			{
-				Console.WriteLine("Finished with html download error!");
-				Console.WriteLine(html.Substring(0, 5));
-			}
-
+		private static void mainThread(object url)
+		{
+			Stopwatch sw = new Stopwatch();
+			sw.Start();
+			DownloadHtml dh = new DownloadHtml();
+			string html = dh.downloadHtml(url.ToString());
+			AnalyzedData ad = AnalyzeHtml.anlyzeHtml(html);
+			sw.Stop();
+			Console.WriteLine("Total Time:"+sw.Elapsed);
 		}
 
 		private static bool checkUrl(string url)
@@ -73,25 +50,6 @@ namespace HtmlAgilityPackUser
 			}
 			else
 				return false;
-		}
-
-
-		private static string downloadHtml(string url)
-		{
-			try
-			{
-				using (WebClient wc = new WebClient())
-				{
-					wc.Encoding = Encoding.UTF8;
-					return wc.DownloadString(url);
-				}
-			}
-			catch (Exception e)
-			{
-				Console.WriteLine("Unexpected error occurred!");
-				Console.WriteLine(e.ToString());
-				return "error" + e.ToString();
-			}
 		}
 	}
 }

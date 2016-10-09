@@ -6,9 +6,9 @@ namespace HtmlAgilityPackUser
 {
 	public class DownloadHtml
 	{
-		public DownloadHtml()
+		/*public DownloadHtml()
 		{
-		}
+		}*/
 
 		public string downloadHtml(string url)
 		{
